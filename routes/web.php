@@ -13,6 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('index');
+Route::get('/categories', [\App\Http\Controllers\MainController::class, 'categories'])->name('categories');
+Route::get('/cart', [\App\Http\Controllers\ShoppingCartController::class, 'cart'])->name('cart');
+Route::post('/cart/add/{product}', [\App\Http\Controllers\ShoppingCartController::class, 'addToCart'])->name('add-to-cart');
+Route::post('/cart/remove/{product}', [\App\Http\Controllers\ShoppingCartController::class, 'removeFromCart'])->name('remove-from-cart');
+Route::get('/order', [\App\Http\Controllers\ShoppingCartController::class, 'order'])->name('order');
+Route::post('/order', [\App\Http\Controllers\ShoppingCartController::class, 'orderPost'])->name('order-post');
+Route::get('/{category}', [\App\Http\Controllers\MainController::class, 'category'])->name('category');
+Route::get('/{category}/{product?}', [\App\Http\Controllers\MainController::class, 'product'])->name('product');
+
