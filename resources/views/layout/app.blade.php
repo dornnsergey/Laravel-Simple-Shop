@@ -22,14 +22,15 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ route('index') }}">Все товары</a></li>
-                <li ><a href="{{ route('categories') }}">Категории</a>
+                <li><a href="{{ route('categories') }}">Категории</a>
                 </li>
-                <li ><a href="{{ route('cart') }}">В корзину</a></li>
+                <li><a href="{{ route('cart') }}">В корзину</a></li>
                 <li><a href="{{ route('index') }}">Сбросить проект в начальное состояние</a></li>
                 <li><a href="https://internet-shop.tmweb.ru/locale/en">en</a></li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">₽<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">₽<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="https://internet-shop.tmweb.ru/currency/RUB">₽</a></li>
                         <li><a href="https://internet-shop.tmweb.ru/currency/USD">$</a></li>
@@ -38,7 +39,18 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="https://internet-shop.tmweb.ru/login">Войти</a></li>
+                @auth
+                    <li><a href="{{ route('home') }}">Administrator panel</a></li>
+                    <li><a href="" onclick="event.preventDefault();
+                                 document.getElementById('logout').submit();">
+                        Logout
+                        </a></li>
+                    <form class="d-none" id="logout" action="{{ route('logout') }}" method="POST">
+                        @csrf
+                    </form>
+                @else
+                    <li><a href="{{ route('login') }}">login</a></li>
+                @endauth
             </ul>
         </div>
     </div>

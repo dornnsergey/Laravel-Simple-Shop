@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class ShoppingCartController extends Controller
@@ -45,7 +46,11 @@ class ShoppingCartController extends Controller
             $order->products()->attach($product);
         }
 
-        return redirect()->route('cart');
+        if (Auth::check()) {
+            $order->user_id = Auth::id();
+            $order->save();
+        }
+        return redirect()->route('cart')->with('message', "Product $product->name has been added successfully");
     }
 
     public function removeFromCart(Product $product)
@@ -66,25 +71,18 @@ class ShoppingCartController extends Controller
             $order->products()->detach($product);
         }
 
-        return redirect()->route('cart');
+        return redirect()->route('cart')->with('message', "Product $product->name has been deleted from cart.");
     }
 
     public function orderPost(Request $request)
     {
         $order = Order::find(session('orderId'));
-        $res = $order->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'status' => 1,
-        ]);
 
-        if ($res) {
+        if ($order->store($request)) {
             session()->flash('success', 'Order has been send successfully.');
         } else {
             session()->flash('warning', 'Error');
         }
-
-        session()->forget('orderId');
 
         return redirect()->route('index');
     }

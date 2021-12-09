@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="starter-template">
-        <p class="alert alert-success">Добавлен товар iPhone X 64GB</p>
+        @if(session('message'))
+        <p class="alert alert-success">{{ session('message') }}</p>
+        @endif
         <h1>Корзина</h1>
         <p>Оформление заказа</p>
         <div class="panel">

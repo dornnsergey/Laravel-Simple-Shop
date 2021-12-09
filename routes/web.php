@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes([
+    'reset' => false,
+    'confirm' => false
+]);
+
+Route::middleware('is_admin')->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'is_admin']);
 
 Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('index');
 Route::get('/categories', [\App\Http\Controllers\MainController::class, 'categories'])->name('categories');
@@ -22,4 +33,8 @@ Route::get('/order', [\App\Http\Controllers\ShoppingCartController::class, 'orde
 Route::post('/order', [\App\Http\Controllers\ShoppingCartController::class, 'orderPost'])->name('order-post');
 Route::get('/{category}', [\App\Http\Controllers\MainController::class, 'category'])->name('category');
 Route::get('/{category}/{product?}', [\App\Http\Controllers\MainController::class, 'product'])->name('product');
+
+
+
+
 

@@ -2,8 +2,11 @@
 
 @section('content')
     <div class="starter-template">
-        @if(session()->has('success'))
-            <div class="alert alert-success">{{ session()->get('success') }}</div>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if(session('warning'))
+            <div class="alert alert-warning">{{ session('warning') }}</div>
         @endif
         <h1>Все товары</h1>
         <form method="GET" action="https://internet-shop.tmweb.ru">
