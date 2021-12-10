@@ -3,7 +3,7 @@
         <div class="labels">
 
         </div>
-        <img src="http://internet-shop.tmweb.ru/storage/products/iphone_x_silver.jpg" alt="iPhone X 256GB">
+        <img src="{{ Storage::url($product->image) }}" alt="iPhone X 256GB">
         <div class="caption">
             <h3>{{ $product->name }}</h3>
             <div>{{ $product->category->name }}</div>

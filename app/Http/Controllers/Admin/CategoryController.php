@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -20,11 +23,21 @@ class CategoryController extends Controller
         return view('admin.categories.create');
     }
 
-    public function store(Request $request)
+    public function store(CreateCategoryRequest $request)
     {
-        Category::create($request->all());
+        if ($request->has('image')) {
+            $filename = time() . $request->file('image')->getClientOriginalName();
+            $request->file('image')->storeAs('categories', $filename, 'public');
+        }
 
-        return redirect()->route('admin.categories.index')->with('message', 'Category has been added.');
+        Category::create([
+            'code' => $request->code,
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $filename ?? null,
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('message', 'Category has been created.');
     }
 
     public function show(Category $category)
@@ -37,24 +50,25 @@ class CategoryController extends Controller
         return view('admin.categories.edit', compact('category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     */
-    public function update(Request $request, Category $category)
+    public function update(EditCategoryRequest $request, Category $category)
     {
-        $category->update($request->all());
+        if ($request->has('image')) {
+            Storage::delete($category->image);
 
-        return redirect()->route('admin.categories.index')->with('message', 'Category has been edited.');
+            $filename = time() . $request->file('image')->getClientOriginalName();
+            $path = $request->file('image')->storeAs('categories', $filename, 'public');
+        }
+
+        $category->update([
+            'code' => $request->code,
+            'name' => $request->name,
+            'description' => $request->description,
+            'image' => $path ?? null,
+        ]);
+
+        return redirect()->route('admin.categories.index')->with('message', 'Category has been updated.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     */
     public function destroy(Category $category)
     {
         $category->delete();

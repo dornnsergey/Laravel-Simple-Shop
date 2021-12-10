@@ -9,7 +9,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $orders = Order::where('status', 1)->get();
+        $orders = Order::with('products')->where('status', 1)->get();
 
         return view('orders.index', compact('orders'));
     }

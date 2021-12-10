@@ -38,10 +38,10 @@
                             <a class="nav-link" href="{{ route('admin.categories.index') }}">Categories</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Products</a>
+                            <a class="nav-link" href="{{ route('admin.products.index') }}">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Orders</a>
+                            <a class="nav-link" href="{{ route('home') }}">Orders</a>
                         </li>
                     </ul>
                     @endauth
