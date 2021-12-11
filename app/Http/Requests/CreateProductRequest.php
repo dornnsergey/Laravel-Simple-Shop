@@ -29,7 +29,8 @@ class CreateProductRequest extends FormRequest
             'description' => 'required|max:255',
             'price'       => 'required|numeric|min:1',
             'image'       => 'nullable|image|max:512',
-            'category_id' => 'required|exists:categories,id'
+            'category_id' => 'required|exists:categories,id',
+            'labels'      => 'nullable',
         ];
     }
 }

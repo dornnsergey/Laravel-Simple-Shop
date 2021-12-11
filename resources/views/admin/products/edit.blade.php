@@ -70,6 +70,15 @@
                 @enderror
             </div>
         </div>
-        <button class="btn btn-success mt-2 col-sm-2" type="submit">Update</button>
+        <div class="input-group col mb-2">
+            <div class="col-sm-2">Labels</div>
+        @foreach($labels as $label)
+            <div class="form-check form-check-inline mt-2">
+                <input class="form-check-input" @if($product->labels->contains($label)) checked @endif type="checkbox" name="labels[]" id="{{ $label->name }}" value="{{ $label->name }}">
+                <label class="form-check-label" for="{{ $label->name }}">{{ $label->name }}</label>
+            </div>
+        @endforeach
+        </div>
+        <button class="d-block btn btn-success mt-2 col-sm-2" type="submit">Update</button>
     </form>
 @endsection

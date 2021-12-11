@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
 use App\Models\Category;
+use App\Models\Label;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,19 +23,28 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $labels = Label::get('name');
 
-        return view('admin.products.create', compact('categories'));
+
+        return view('admin.products.create', compact('categories', 'labels'));
     }
 
     public function store(CreateProductRequest $request)
     {
-        $product = $request->validated();
+        $data = $request->validated();
         if ($request->has('image')) {
             $filename = time() . $request->file('image')->getClientOriginalName();
             $product['image'] = $request->file('image')->storeAs('products', $filename, 'public');
         }
 
-        Product::create($product);
+        $product = Product::create($data);
+
+        if ($request->has('labels')) {
+            foreach ($request->labels as $labelName) {
+                $label = Label::where('name', $labelName)->first();
+                $product->labels()->attach($label);
+            }
+        }
 
         return redirect()->route('admin.products.index')->with('message', 'Product has been created.');
     }
@@ -47,8 +57,9 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::all();
+        $labels = Label::all();
 
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product', 'categories', 'labels'));
     }
 
     public function update(EditProductRequest $request, Product $product)
@@ -62,6 +73,16 @@ class ProductController extends Controller
         }
 
         $product->update($newData);
+
+
+        if ($request->has('labels')) {
+            $newLabels = [];
+            foreach ($request->labels as $labelName) {
+                $label = Label::where('name', $labelName)->first();
+                array_push($newLabels, $label->id);
+            }
+            $product->labels()->sync($newLabels);
+        }
 
         return redirect()->route('admin.products.index')->with('message', 'Product has been updated.');
     }

@@ -18,12 +18,22 @@ Auth::routes([
     'confirm' => false
 ]);
 
-Route::middleware('is_admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
-    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+Route::middleware('auth')->group(function () {
+    Route::middleware('is_admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class);
+        Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+        Route::get('orders', [App\Http\Controllers\Admin\OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [App\Http\Controllers\Admin\OrderController::class, 'show'])->name('orders.show');
+    });
+
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('orders', [\App\Http\Controllers\User\UserController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [\App\Http\Controllers\User\UserController::class, 'show'])->name('orders.show');
+    });
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['auth', 'is_admin']);
+
+
 
 Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('index');
 Route::get('/categories', [\App\Http\Controllers\MainController::class, 'categories'])->name('categories');

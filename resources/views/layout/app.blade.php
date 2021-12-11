@@ -40,7 +40,11 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 @auth
-                    <li><a href="{{ route('home') }}">Administrator panel</a></li>
+                    @admin
+                        <li><a href="{{ route('admin.orders.index') }}">Administrator panel</a></li>
+                    @else
+                        <li><a href="{{ route('user.orders.index') }}">User panel</a></li>
+                    @endadmin
                     <li><a href="" onclick="event.preventDefault();
                                  document.getElementById('logout').submit();">
                         Logout
@@ -49,7 +53,7 @@
                         @csrf
                     </form>
                 @else
-                    <li><a href="{{ route('login') }}">login</a></li>
+                    <li><a href="{{ route('login') }}">Login</a></li>
                 @endauth
             </ul>
         </div>

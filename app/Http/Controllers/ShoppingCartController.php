@@ -13,7 +13,11 @@ class ShoppingCartController extends Controller
     public function cart()
     {
         $orderId = session('orderId');
-        if (!is_null($orderId)) {
+
+        if (is_null($orderId)) {
+            $order = Order::create();
+            session(['orderId' => $order->id]);
+        } else {
             $order = Order::findOrFail($orderId);
         }
 
@@ -24,7 +28,6 @@ class ShoppingCartController extends Controller
     {
         $orderId = session('orderId');
         $order = Order::find($orderId);
-
 
         return view('order', compact('order'));
     }

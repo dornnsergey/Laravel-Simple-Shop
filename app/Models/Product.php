@@ -15,7 +15,10 @@ class Product extends Model
         'description',
         'price',
         'image',
-        'category_id'
+        'category_id',
+        'new',
+        'hit',
+        'recommended'
     ];
 
     public function category()
@@ -26,6 +29,11 @@ class Product extends Model
     public function orders()
     {
         return $this->belongsToMany(Order::class);
+    }
+
+    public function labels()
+    {
+        return $this->belongsToMany(Label::class);
     }
 
     public function getTotalSum()
