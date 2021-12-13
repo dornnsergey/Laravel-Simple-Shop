@@ -18,7 +18,7 @@ class ShoppingCartController extends Controller
             $order = Order::create();
             session(['orderId' => $order->id]);
         } else {
-            $order = Order::findOrFail($orderId);
+            $order = Order::with('products')->findOrFail($orderId);
         }
 
         return view('cart', compact('order'));
@@ -60,10 +60,6 @@ class ShoppingCartController extends Controller
     {
         $orderId = session('orderId');
 
-        if (is_null($orderId)) {
-            $order = Order::create();
-            return false;
-        }
         $order = Order::find($orderId);
 
         $productPivot = $order->products()->find($product)->pivot;

@@ -38,6 +38,15 @@
                 <td>Category</td>
                 <td>{{ $product->category->name }}</td>
             </tr>
+            <tr>
+                <td>Labels</td>
+                <td>
+                    @forelse($product->labels as $label)
+                        <span class="badge bg-success">{{ $label->name }}</span>
+                    @empty
+                    @endforelse
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

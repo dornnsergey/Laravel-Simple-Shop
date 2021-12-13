@@ -25,7 +25,6 @@
                 <li><a href="{{ route('categories') }}">Категории</a>
                 </li>
                 <li><a href="{{ route('cart') }}">В корзину</a></li>
-                <li><a href="{{ route('index') }}">Сбросить проект в начальное состояние</a></li>
                 <li><a href="https://internet-shop.tmweb.ru/locale/en">en</a></li>
 
                 <li class="dropdown">

@@ -26,7 +26,7 @@
                         Действия
                     </th>
                 </tr>
-                @foreach($orders as $order)
+                @forelse($orders as $order)
                     <tr>
                         <td>{{ $order->id}}</td>
                         <td>{{ $order->name }}</td>
@@ -40,7 +40,11 @@
                             </div>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="6">No orders.</td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>

@@ -30,7 +30,7 @@
                                 <a class="btn btn-warning" type="button" href="{{ route('admin.products.edit', $product) }}">Edit</a>
                                 @csrf
                                 @method('DELETE')
-                                <input class="btn btn-danger" type="submit" value="Delete"></form>
+                                <input class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?')"></form>
                         </div>
                     </td>
                 </tr>

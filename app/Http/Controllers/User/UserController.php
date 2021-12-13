@@ -11,7 +11,7 @@ class UserController extends Controller
     public function index()
     {
         $orders = auth()->user()->orders()
-            ->where('status', 1)
+            ->active()
             ->paginate(10);
 
         return view('user.orders.index', compact('orders'));

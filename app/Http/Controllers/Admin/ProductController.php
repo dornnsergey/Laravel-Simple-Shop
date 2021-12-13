@@ -65,6 +65,7 @@ class ProductController extends Controller
     public function update(EditProductRequest $request, Product $product)
     {
         $newData = $request->validated();
+
         if ($request->has('image')) {
             Storage::delete($product->image);
 
@@ -82,6 +83,8 @@ class ProductController extends Controller
                 array_push($newLabels, $label->id);
             }
             $product->labels()->sync($newLabels);
+        } else {
+            $product->labels()->detach();
         }
 
         return redirect()->route('admin.products.index')->with('message', 'Product has been updated.');
@@ -89,6 +92,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $product->labels()->detach();
         $product->delete();
 
         return redirect()->route('admin.products.index')->with('message', 'Product has been deleted.');

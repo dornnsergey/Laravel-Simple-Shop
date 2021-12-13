@@ -10,7 +10,7 @@ class OrderController extends Controller
 
     public function index()
     {
-        $orders = Order::with('products')->where('status', 1)->get();
+        $orders = Order::with('products')->active()->get();
 
         return view('admin.orders.index', compact('orders'));
     }

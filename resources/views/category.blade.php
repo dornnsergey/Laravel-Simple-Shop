@@ -9,7 +9,7 @@
             {{ $category->description }}
         </p>
         <div class="row">
-            @foreach($category->products as $product)
+            @foreach($products as $product)
             @include('card')
             @endforeach
         </div>

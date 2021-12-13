@@ -24,6 +24,7 @@ div.labels {
 }
 
 div.labels span.badge {
+    min-width: 80px;
     display: block;
 }
 
@@ -34,12 +35,12 @@ span.badge.badge-success {
 
 span.badge.badge-warning {
     color: #fff;
-    background-color: #dc3545;
+    background-color: #ffc107;
 }
 
 span.badge.badge-danger {
-    color: #212529;
-    background-color: #ffc107;
+    color: #fff;
+    background-color: #dc3545;
 }
 
 div.filters {

@@ -15,4 +15,9 @@ class Label extends Model
     {
         return $this->belongsToMany(Product::class);
     }
+
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value) . '!';
+    }
 }
