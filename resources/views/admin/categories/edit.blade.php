@@ -6,11 +6,11 @@
         @csrf
         @method('PUT')
         <div class="input-group row mb-2">
-            <label class="form-label col-sm-2" for="code">Code</label>
+            <label class="form-label col-sm-2" for="slug">Slug</label>
             <div class="col-sm-6">
-                <input class="form-control @error('code') is-invalid @enderror" name="code" id="code"
-                       value="{{ old('code', $category->code) }}">
-                @error('code')
+                <input class="form-control @error('slug') is-invalid @enderror" name="slug" id="slug"
+                       value="{{ old('slug', $category->slug) }}">
+                @error('slug')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>

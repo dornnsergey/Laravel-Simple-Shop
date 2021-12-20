@@ -2,7 +2,11 @@
 
 @section('content')
     <div class="col-md-12">
-        <h1>Categories</h1>
+        <h1 class="text-center">Categories</h1>
+
+        <a class="btn btn-success mb-2" type="button"
+           href="{{ route('admin.categories.create') }}">Add category</a>
+
         @if(session('message'))
             <div class="alert alert-warning">{{ session('message') }}</div>
         @endif
@@ -10,9 +14,9 @@
             <tbody>
             <tr>
                 <th>#</th>
-                <th>Код</th>
-                <th>Название</th>
-                <th class="col-md-4">Действия</th>
+                <th>Slug</th>
+                <th>Name</th>
+                <th class="col-md-4"></th>
             </tr>
             @foreach($categories as $category)
                 <tr>
@@ -22,19 +26,18 @@
                     <td>
                         <div class="btn-group" role="group">
                             <form action="{{ route('admin.categories.destroy', $category) }}" method="POST">
-                                <a class="btn btn-success" type="button" href="{{ route('admin.categories.show', $category) }}">Открыть</a>
-                                <a class="btn btn-warning" type="button" href="{{ route('admin.categories.edit', $category) }}">Редактировать</a>
+                                <a class="btn btn-success" type="button"
+                                   href="{{ route('admin.categories.show', $category) }}">Show</a>
+                                <a class="btn btn-warning" type="button"
+                                   href="{{ route('admin.categories.edit', $category) }}">Edit</a>
                                 @csrf
                                 @method('DELETE')
-                                <input class="btn btn-danger" type="submit" value="Удалить"></form>
+                                <input class="btn btn-danger" type="submit" value="Delete"></form>
                         </div>
                     </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
-
-        <a class="btn btn-success" type="button"
-           href="{{ route('admin.categories.create') }}">Добавить категорию</a>
     </div>
 @endsection

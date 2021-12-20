@@ -2,11 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Order;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class IsAdmin
+class InitializationUserCart
 {
     /**
      * Handle an incoming request.
@@ -17,9 +17,8 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::user()->isAdmin()) {
-            return redirect()->route('index')->with('warning', 'Please auth as an admin.');
-        }
+        $order = session('order') ?? Order::create();
+        session(['order' => $order]);
 
         return $next($request);
     }

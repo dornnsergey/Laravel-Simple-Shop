@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class Order extends Model
 {
@@ -25,17 +24,6 @@ class Order extends Model
         }
 
         return $total;
-    }
-
-    public function store(Request $request)
-    {
-        session()->forget('orderId');
-
-        return $this->update([
-            'name' => $request->name,
-            'phone' => $request->phone,
-            'status' => 1,
-        ]);
     }
 
     public function user()

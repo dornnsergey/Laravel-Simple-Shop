@@ -2,34 +2,40 @@
 
 @section('content')
     <div class="starter-template">
-        <h1>Подтвердите заказ:</h1>
+        <h1>Confirm order:</h1>
         <div class="container">
             <div class="row justify-content-center">
-                <p>Общая стоимость: <b>{{ $order->getTotalSum() }} ₽.</b></p>
-                <form action="{{route('order-post') }}" method="POST">
+                <p>Total cost: <b>{{ $order->getTotalSum() }} $.</b></p>
+                <form action="{{route('order_post') }}" method="POST">
                     <div>
-                        <p>Укажите свои имя и номер телефона, чтобы наш менеджер мог с вами связаться:</p>
-
+                        <p>Enter your name and phone number so that our manager can contact you:</p>
                         <div class="container">
                             <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Имя: </label>
+                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Name: </label>
                                 <div class="col-lg-4">
                                     <input type="text" name="name" id="name" value="" class="form-control">
+                                    @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <br>
                             <br>
                             <div class="form-group">
-                                <label for="phone" class="control-label col-lg-offset-3 col-lg-2">Номер
-                                    телефона: </label>
+                                <label for="phone" class="control-label col-lg-offset-3 col-lg-2">
+                                    Phone number:
+                                </label>
                                 <div class="col-lg-4">
                                     <input type="text" name="phone" id="phone" value="{{ old('phone') }}" class="form-control">
+                                    @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                             <br>
                             <br>
                             <div class="form-group">
-                                <label for="name" class="control-label col-lg-offset-3 col-lg-2">Email: </label>
+                                <label for="email" class="control-label col-lg-offset-3 col-lg-2">Email: </label>
                                 <div class="col-lg-4">
                                     <input type="email" name="email" id="email" value="{{ old('email') }}" class="form-control">
                                 </div>
@@ -37,7 +43,7 @@
                         </div>
                         <br>
                         @csrf
-                        <input type="submit" class="btn btn-success" value="Подтвердите заказ">
+                        <input type="submit" class="btn btn-success" value="Confirm">
                     </div>
                 </form>
             </div>

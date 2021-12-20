@@ -5,43 +5,43 @@
         @if(session('message'))
         <p class="alert alert-success">{{ session('message') }}</p>
         @endif
-        <h1>Корзина</h1>
-        <p>Оформление заказа</p>
+        <h1>Cart</h1>
+        <p>Checkout</p>
         <div class="panel">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Название</th>
-                    <th>Кол-во</th>
-                    <th>Цена</th>
-                    <th>Стоимость</th>
+                    <th>Name</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                    <th>Total price</th>
                 </tr>
                 </thead>
                 <tbody>
                 @forelse($order->products as $product)
                 <tr>
                     <td>
-                        <a href="{{ route('product', [$product->category->code, $product->code]) }}">
+                        <a href="{{ route('shop.products.show', $product->slug) }}">
                             <img height="56px" src="{{ Storage::url($product->image) }}">
                             {{ $product->name }}
                         </a>
                     </td>
                     <td><span class="badge">{{ $product->pivot->count }}</span>
                         <div class="btn-group form-inline">
-                            <form action="{{ route('remove-from-cart', $product->id) }}" method="POST">
+                            <form action="{{ route('remove_from_cart', $product) }}" method="POST">
                                 <button type="submit" class="btn btn-danger"><span
                                         class="glyphicon glyphicon-minus" aria-hidden="true"></span></button>
                                 @csrf
                             </form>
-                            <form action="{{ route('add-to-cart', $product->id) }}" method="POST">
+                            <form action="{{ route('add_to_cart', $product) }}" method="POST">
                                 <button type="submit" class="btn btn-success"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                                 @csrf
                             </form>
                         </div>
                     </td>
-                    <td>{{ $product->price }} ₽</td>
-                    <td>{{ $product->getTotalSum() }} ₽</td>
+                    <td>{{ $product->price }} $</td>
+                    <td>{{ $product->getTotalSum() }} $</td>
                 </tr>
                 @empty
                     <tr>
@@ -49,15 +49,16 @@
                     </tr>
                 @endforelse
                 <tr>
-                    <td colspan="3">Общая стоимость:</td>
-                    <td>{{ $order->getTotalSum() }} ₽</td>
+                    <td colspan="3">Total cost:</td>
+                    <td>{{ $order->getTotalSum() }} $</td>
                 </tr>
                 </tbody>
             </table>
             <br>
             <div class="btn-group pull-right" role="group">
-                <a type="button" class="btn btn-success" href="{{ route('order') }}">Оформить
-                    заказ</a>
+                <a type="button" class="btn btn-success" href="{{ route('order') }}">
+                   Confirm
+                </a>
             </div>
         </div>
     </div>

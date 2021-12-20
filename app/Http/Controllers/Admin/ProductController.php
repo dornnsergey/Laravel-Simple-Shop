@@ -64,17 +64,15 @@ class ProductController extends Controller
 
     public function update(EditProductRequest $request, Product $product)
     {
-        $newData = $request->validated();
-
+        $data = $request->validated();
         if ($request->has('image')) {
             Storage::delete($product->image);
 
             $filename = time() . $request->file('image')->getClientOriginalName();
-            $newData['image'] = $request->file('image')->storeAs('products', $filename, 'public');
+            $data['image'] = $request->file('image')->storeAs('products', $filename, 'public');
         }
 
-        $product->update($newData);
-
+        $product->update($data);
 
         if ($request->has('labels')) {
             $newLabels = [];

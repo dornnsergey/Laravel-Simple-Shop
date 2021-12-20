@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EditProductRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class EditProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'code'        => 'required|unique:products,code,' . $this->product->id,
+            'slug'        => 'required|unique:products,slug,' . $this->product->id,
             'name'        => 'required|unique:products,name,' . $this->product->id,
             'description' => 'required|max:255',
             'price'       => 'required|numeric|min:1',

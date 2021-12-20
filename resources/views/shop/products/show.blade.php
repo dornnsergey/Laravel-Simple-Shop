@@ -8,7 +8,7 @@
         <img src="{{ Storage::url($product->image) }}" height="300px" width="200px">
         <p>{{ $product->description }}</p>
 
-        <form action="{{ route('add-to-cart', $product->id) }}" method="POST">
+        <form action="{{ route('add_to_cart', $product->id) }}" method="POST">
             <button type="submit" class="btn btn-success" role="button">Add to cart</button>
             @csrf
         </form>

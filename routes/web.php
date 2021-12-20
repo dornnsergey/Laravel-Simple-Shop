@@ -32,18 +32,20 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('/', [\App\Http\Controllers\Shop\ProductController::class, 'index'])->name('home');
+Route::get('product/{slug}', [\App\Http\Controllers\Shop\ProductController::class, 'show'])->name('shop.products.show');
+Route::get('/categories', [\App\Http\Controllers\Shop\CategoryController::class, 'index'])->name('shop.categories.index');
+Route::get('category/{slug}', [\App\Http\Controllers\Shop\CategoryController::class, 'show'])->name('shop.categories.show');
+
+Route::middleware('user_cart')->group(function () {
+    Route::get('/cart', [\App\Http\Controllers\Shop\CartController::class, 'cart'])->name('cart');
+    Route::post('/cart/add/{product}', [\App\Http\Controllers\Shop\CartController::class, 'addToCart'])->name('add_to_cart');
+    Route::post('/cart/remove/{product}', [\App\Http\Controllers\Shop\CartController::class, 'removeFromCart'])->name('remove_from_cart');
+    Route::get('/order', [\App\Http\Controllers\Shop\CartController::class, 'order'])->name('order');
+    Route::post('/order', [\App\Http\Controllers\Shop\CartController::class, 'orderPost'])->name('order_post');
+});
 
 
-
-Route::get('/', [\App\Http\Controllers\MainController::class, 'index'])->name('index');
-Route::get('/categories', [\App\Http\Controllers\MainController::class, 'categories'])->name('categories');
-Route::get('/cart', [\App\Http\Controllers\ShoppingCartController::class, 'cart'])->name('cart');
-Route::post('/cart/add/{product}', [\App\Http\Controllers\ShoppingCartController::class, 'addToCart'])->name('add-to-cart');
-Route::post('/cart/remove/{product}', [\App\Http\Controllers\ShoppingCartController::class, 'removeFromCart'])->name('remove-from-cart');
-Route::get('/order', [\App\Http\Controllers\ShoppingCartController::class, 'order'])->name('order');
-Route::post('/order', [\App\Http\Controllers\ShoppingCartController::class, 'orderPost'])->name('order-post');
-Route::get('/{category}', [\App\Http\Controllers\MainController::class, 'category'])->name('category');
-Route::get('/{category}/{product?}', [\App\Http\Controllers\MainController::class, 'product'])->name('product');
 
 
 

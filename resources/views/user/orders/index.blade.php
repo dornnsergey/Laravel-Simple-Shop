@@ -7,24 +7,12 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <th>
-                        #
-                    </th>
-                    <th>
-                        Имя
-                    </th>
-                    <th>
-                        Телефон
-                    </th>
-                    <th>
-                        Когда отправлен
-                    </th>
-                    <th>
-                        Сумма
-                    </th>
-                    <th>
-                        Действия
-                    </th>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Created at</th>
+                    <th>Total cost</th>
+                    <th></th>
                 </tr>
                 @forelse($orders as $order)
                     <tr>
@@ -32,7 +20,7 @@
                         <td>{{ $order->name }}</td>
                         <td>{{ $order->phone }}</td>
                         <td>{{ $order->created_at->format('H:i d/m/Y') }}</td>
-                        <td>{{ $order->getTotalSum() }} руб.</td>
+                        <td>{{ $order->getTotalSum() }} $.</td>
                         <td>
                             <div class="btn-group" role="group">
                                 <a class="btn btn-success" type="button"

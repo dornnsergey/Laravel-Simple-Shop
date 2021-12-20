@@ -11,17 +11,17 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Название</th>
-                                <th>Кол-во</th>
-                                <th>Цена</th>
-                                <th>Стоимость</th>
+                                <th>Name</th>
+                                <th>Count</th>
+                                <th>Price</th>
+                                <th>Total price</th>
                             </tr>
                         </thead>
                         <tbody>
                         @foreach ($order->products as $product)
                         <tr>
                             <td>
-                                <a href="{{ route('product', [$product->category->code, $product->code])}}">
+                                <a href="{{ route('shop.products.show', $product->slug)}}">
                                     <img src="{{Storage::url($product->image)}}" height="56px">
                                     {{ $product->name }}
                                 </a>
@@ -32,7 +32,7 @@
                         </tr>
                         @endforeach
                         <tr>
-                            <td colspan="3">Total cost</td>
+                            <td colspan="3">Total cost: </td>
                             <td colspan="3">{{ $order->getTotalSum() }}</td>
                         </tr>
                         </tbody>

@@ -23,8 +23,9 @@ class EditCategoryRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'code' => 'required|min:3',
+            'slug' => 'required|min:3',
             'name' => 'required|min:3|unique:categories,name,' . $this->category->id,
             'description' => 'required|min:12',
             'image' => 'nullable|image|max:1024'
